@@ -1,0 +1,28 @@
+## TODO: Add the vectors together element-wise. For example, 
+## element-wise addition of [2, 6] and [10, 3] is [12, 9].
+## Place the answer in the x1 variable. 
+##
+## Hint: You can use a for loop. The append method might also
+## be helpful.
+
+#x0 = [5,2,10,0]
+#xdelta = [3,5,2,5]
+x1 = []
+
+for i in range(len(x0)):
+   
+    #for j in range(len(xdelta)): 
+    xsum = (x0[i]+xdelta[i])
+    x1.append(xsum)
+        
+return x1
+
+/*NameError                                 Traceback (most recent call last)
+<ipython-input-1-209b1f367a82> in <module>()
+     10 x1 = []
+     11 
+---> 12 for i in range(len(x0)):
+     13 
+     14     #for j in range(len(xdelta)):
+
+NameError: name 'x0' is not defined*/
