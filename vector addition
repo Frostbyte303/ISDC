@@ -30,7 +30,7 @@ def matrix_addition(matrixA, matrixB):
     # TODO: When a row is filled, append the row to matrixSum. 
     # Then reinitialize row as an empty list
             
-            for row in row1:
+            for i in row1:
                 row.append(row1)
                 
         matrixSum.append(row)
