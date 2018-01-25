@@ -16,6 +16,7 @@ def matrix_addition(matrixA, matrixB):
     
     # matrix to hold a row for appending sums of each element
         row = []
+        row1 = []
     
     # TODO: write a for loop within a for loop to iterate over
     # the matrices
