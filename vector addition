@@ -24,13 +24,16 @@ def matrix_addition(matrixA, matrixB):
             
     # TODO: As you iterate through the matrices, add matching
     # elements and append the sum to the row variable
-            row = (matrixA[i][j]) + (matrixB[i][j])
+    
+            row1 = (matrixA[i][j]) + (matrixB[i][j])
+        
     # TODO: When a row is filled, append the row to matrixSum. 
     # Then reinitialize row as an empty list
-            #if j <= len(matrixA[0]):
-            matrixSum.append(row)
-           # else:
-               # row = []
+            
+            for row in row1:
+                row.append(row1)
+                
+        matrixSum.append(row)
         
     return matrixSum
 
