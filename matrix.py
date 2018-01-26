@@ -138,10 +138,11 @@ class Matrix(object):
          #   for j in range (self.w):
           #       selfAdd[i][j] = (self[i][j] + other[i][j]) 
         #return selfAdd
+        row = []
         selfAdd1 = []
-        for i in range (len(matrixA)):
-            for j in range (len(matrixA[0])):
-                selfAdd1 = [[matrixA[i][j] + matrixB[i][j]  for j in range(len(matrixA[0]))] for i in range(len(matrixA))]
+        for i in range (len(self.g)):
+            for j in range (len(self.g)):
+                selfAdd1 = [[self.g[i][j] + self.g[i][j]  for j in range(len(self.g))] for i in range(len(self.g))]
         
                 for i in row:
                     selfAdd.append(selfAdd1)
