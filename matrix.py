@@ -41,7 +41,7 @@ class Matrix(object):
         
         # TODO - your code here
         if self.h == 1:
-            self = self.g[0][0]
+            selfDeterminant = self.g[0][0]
         else:
             selfDeterminant = (self.g[0][0]*self.g[1][1] - self.g[0][1]*self.g[1][0]) 
         return selfDeterminant
@@ -145,11 +145,11 @@ class Matrix(object):
                 selfAdd1 = [[self.g[i][j] + self.g[i][j]  for j in range(len(self.g))] for i in range(len(self.g))]
         
                 for i in row:
-                    selfAdd.append(selfAdd1)
-                    return selfAdd
-        
-        
-        
+                    other.append(selfAdd1)
+                    #selfAdd.append(selfAdd1)
+                    print (other) #(selfAdd)
+                    print (selfAdd1)
+                    return other #selfAdd
         
     def __neg__(self):
         """
@@ -169,15 +169,11 @@ class Matrix(object):
         if (self.h) == 1:
             selfNeg = [(self.g[0] * (-1))]
         else:
-         #   selfNeg = [(self.g[0][0] * (-1)),(self.g[0][1] * (-1))],[(self.g[1][0] * (-1)),(self.g[1][1] * (-1))]
-        #selfNeg = [[][],[][]]
-        #selfNeg= self.g #[[0 for row in range(self.h)]  for col in range(self.w)]
-        #for i in range (self.h):
-         #   for j in range (self.w):
-          #      selfNeg[i][j] = ((self[i][j]) * (-1)) 
-                #selfNeg = ((self.g[i][j]) * (-1))    
-        #return selfNeg
             selfNeg = [[self.g[i][j] * -1 for j in range(len(self.g))] for i in range(len(self.g))]
+            print ('this is self')
+            print (self)
+            print ('this is selfNeg')
+            print (selfNeg)
             return selfNeg 
             
             
@@ -229,4 +225,4 @@ class Matrix(object):
         for i in range (self.h):
             for j in range (self.w):
                  selfRmul[i][j] = (self.g[i][j] * (other.g))                     
-        return selfRmul            
+        return selfRmul                      
