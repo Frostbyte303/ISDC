@@ -166,14 +166,18 @@ class Matrix(object):
         #   
         # TODO - your code here
         #selfNeg = [[0]* self.h for i in range (self.w)]
+        selfNeg = []
         if (self.h) == 1:
             selfNeg = [(self.g[0] * (-1))]
         else:
-            selfNeg = [[self.g[i][j] * -1 for j in range(len(self.g))] for i in range(len(self.g))]
-            print ('this is self')
-            print (self)
-            print ('this is selfNeg')
-            print (selfNeg)
+            for i in range(len(self.g)):
+                row = []    
+                for j in range(len(self.g[0])):
+                     row.append(self.g[i][j] * -1)
+                selfNeg.append(row)   
+                        
+                        #selfNeg = [[self.g[i][j] * -1 for j in range(len(self.g))] for i in range(len(self.g))]
+
             return selfNeg 
             
             
