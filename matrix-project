@@ -182,23 +182,32 @@ class Matrix(object):
         print ('negative working', self)
         return self
              
-            
+    
     def __sub__(self, other):
         """
         Defines the behavior of - operator (as subtraction)
         """
-        #   
         # TODO - your code here
         #
         #selfSub= [[0 for row in range(self.h)] for col in range(self.w)]
         #selfSub = [[0]* self.h for i in range (self.w)] # is this calling zeros?
-        selfSub = [[0 for row in range(self.w)] for col in range(self.h)]
+        #selfSub = [[0 for row in range(self.w)] for col in range(self.h)]
 
+        #for i in range(self.h):
+          #  for j in range(self.w):
+         #       selfSub[i][j] = ([self[i][j] + other[i][j]])
+        #print ('sub working')                
+        #return Matrix(selfSub)
+        
+        grid = []
+        print (self, grid, 'beginningof sub')
         for i in range(self.h):
+            row = []
             for j in range(self.w):
-                selfSub[i][j] = ([self[i][j] + other[i][j]])
-        print ('sub working')                
-        return Matrix(selfSub)                   
+                row.append(self[i][j] - other[i][j])
+            grid.append(row)
+        print ('sub works, returning grid', grid)
+        return grid        
 
     def __mul__(self, other):
         """
