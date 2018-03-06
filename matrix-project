@@ -76,14 +76,13 @@ class Matrix(object):
         # TODO - your code here
 
         if self.w == 1:   
-            return Matrix(1/(self.g[0][0]))
+            return Matrix(1/self.g[0][0])
         
-        else:
-            len(self[0]) == 2
+        if self.w == 2:
             inverT = zeroes(self.w, self.h)
             inverT[0][0] = self.g[1][1] * (1/self.determinant())
-            inverT[0][1] = self.g[0][1] * (1/self.determinant())
-            inverT[1][0] = self.g[1][0] * (1/self.determinant())
+            inverT[0][1] = -self.g[0][1] * (1/self.determinant())
+            inverT[1][0] = -self.g[1][0] * (1/self.determinant())
             inverT[1][1] = self.g[0][0] * (1/self.determinant())
                    
             #selfInvert = ((1/selfDeterminant)((selfTrace)(I))- self)
@@ -94,11 +93,10 @@ class Matrix(object):
         Returns a transposed copy of this Matrix.
         """
         # TODO - your code here
-        if len(self.h) == 1:
+        if self.w == 1:
             selfT = self
         else:
-            selfT = self[[0][0],[1][0]],[[0][1],[1][1]]
-        print ('This is selfT working')
+            selfT = self[0][0],self[1][0],self[0][1],self[1][1]
         return selfT
     
     def is_square(self):
