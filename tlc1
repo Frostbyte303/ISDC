@@ -19,59 +19,89 @@ IMAGE_DIR_TEST = "traffic_light_images/test/"
 IMAGE_LIST = helpers.load_dataset(IMAGE_DIR_TRAINING)
 
 #crop image to 32 x 32
-def standardize_input(image):
+def standardize_input(rgb_image):
     
     ## TODO: Resize image and pre-process so that all "standard" images are the same size  
-    standard_im = cv2.resize(np.copy(image), (32,32))
-    row_crop = 10
-    col_crop = 10
+    standard_im = cv2.resize(np.copy(rgb_image), (32,32))
+    row_crop = 5
+    col_crop = 6
 
 # Using image slicing, subtract the row_crop from top/bottom and col_crop from left/right
     image_crop = standard_im[row_crop:-row_crop, col_crop:-col_crop, :]
-    return standard_im
+    
+    return image_crop
+
+def masking(rgb_image, threshhold):
+    masked = np.copy(rgb_image)
+    hsv_mask = cv2.Color(rgb_image, cv2.COLOR_RGB2HSV)
+
+    threshhold = hsv_mask[:,:,2] <= threshold
+    masked[threshhold] = 0
+
+    return masked
+
+
+def brightness(rgb_image):
+    
+    threshhold = 200
+    masked_hsv = mask_image(rgb_image, threshhold)
+
+    crop_hsv = crop(masked_hsv)
+    sum_val_rows = np.sum(crop_hsv[:,:,2], axis = 1)
+    brighest_spot = np.argmax(sum_val_rows[:])
+
+    return sum_val_rows, brighest_spot
+
 
 def estimate_label(rgb_image): # Standardized RGB image
-    #return standardize_input(rgb_image)
     return red_green_yellow(rgb_image)
+
+def hsv_mask(standardize_input):
+    
+    my_mask = np.copy(standardize_input)
+    hsv = cv2.cvtColor(standardize_input, cv2.COLOR_RGB2HSV)
+    hsv_filter = hsv[:,:,2] <= 250
+    my_mask[hsv_filter] = 0
+
+    return my_mask
+   
 
 def red_green_yellow(rgb_image):
   #'''Determines the Red, Green, and Yellow content in each image using HSV and
   #experimentally determined thresholds. Returns a classification based on the
   #values.
-  
-    hsv = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2HSV)
-    sum_saturation = np.sum(hsv[:,:,1]) # Sum the brightness values
-    area = 32*32
-    avg_saturation = sum_saturation / area # Find the average
-
-    sat_low = int(avg_saturation * 1.5)
-    val_low = 140
-
-  # Green
-    lower_green = np.array([60,sat_low,120])
-    upper_green = np.array([100,255,255])
-    #green_mask = cv2.inRange(hsv, lower_green, upper_green)
+    #Green
+    #lower_green_hsv =np.array([:,:,105])
+    #upper_green_hsv = np.array([:,:,135])
+    
+    lower_green = np.array([70,100,60])
+    upper_green = np.array([100,255,0])
+    #green_mask = cv2.inRange(hsv, lower_green_hsv, upper_green_hsv)
     green_mask = cv2.inRange(rgb_image, lower_green, upper_green)
     green_result = cv2.bitwise_and(rgb_image, rgb_image, mask = green_mask)
 
   # Yellow
-    lower_yellow = np.array([10,sat_low,120])
-    upper_yellow = np.array([60,255,255])
+    lower_yellow = np.array([100,100,30])
+    upper_yellow = np.array([250,255,0])
     #yellow_mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
     yellow_mask = cv2.inRange(rgb_image, lower_yellow, upper_yellow)
     yellow_result = cv2.bitwise_and(rgb_image, rgb_image, mask = yellow_mask)
 
   # Red
-    lower_red = np.array([150,sat_low,120])
-    upper_red = np.array([180,255,255])
+    lower_red = np.array([100,70,70])
+    upper_red = np.array([255,0,0])
     #red_mask = cv2.inRange(hsv, lower_red, upper_red)
     red_mask = cv2.inRange(rgb_image, lower_red, upper_red)
     red_result = cv2.bitwise_and(rgb_image, rgb_image, mask = red_mask)
-
+    
+    global sum_red
+    global sum_yellow
+    global sum_green
+    
     sum_red = np.sum(rgb_image[:,:,0])
     sum_yellow = np.sum(rgb_image[:,:,1])
     sum_green = np.sum(rgb_image[:,:,2])
-    
+     
     if sum_red >= sum_yellow and sum_red >= sum_green:
         return [1,0,0] # Red
     if sum_yellow >= sum_green:
@@ -91,7 +121,8 @@ def one_hot_encode(label):
         return [1,0,0]
         ## TODO: Create a one-hot encoded label that works for all classes of traffic lights
     one_hot_encoded = [] 
-    
+    assert(len(one_hot_encoded) == 3)
+    print (len(one_hot_encoded))
     return one_hot_encoded
 
 #another include just in case
