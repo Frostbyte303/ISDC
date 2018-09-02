@@ -6,8 +6,8 @@ def zeroes(height, width):
         """
         Creates a matrix of zeroes.
         """
-        g = [[0.0 for _ in range(width)] for __ in range(height)]
-        return Matrix(g)
+        g = [[0.0 for _ in range(width)] for __ in range(height)] #0.0.for float
+        return Matrix(g)   #to return grid of 0's
 
 def identity(n):
         """
@@ -21,7 +21,7 @@ def identity(n):
 class Matrix(object):
 
     # Constructor
-    def __init__(self, grid):
+    def __init__(self, grid):   #here is where the classes are defined
         self.g = grid
         self.h = len(grid)
         self.w = len(grid[0])
@@ -41,10 +41,11 @@ class Matrix(object):
         
         # TODO - your code here
         if len(self[0]) == 1:    #self.h ==1
-            selfDeterminant = self  #.g[0][0]
+            selfDeterminant = self  #.g[0][0] , self calls the entire 1x1 array0
         else:
             print ('This is self determinant')
-            selfDeterminant = (self[0][0]*self[1][1] - self[0][1]*self[1][0]) # why self not self.g[][]
+            selfDeterminant = (self[0][0]*self[1][1] - self[0][1]*self[1][0]) 
+            # why self not self.g[][], becasue calling potisiton in array
         print(selfDeterminant, 'determinant')    
         return selfDeterminant
     
